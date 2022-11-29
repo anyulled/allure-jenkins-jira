@@ -16,7 +16,7 @@
     <properties>
         <allure.maven.version>2.10.0</allure.maven.version>
         <allure.version>2.20.0</allure.version>
-        <aspectj.version>1.9.4</aspectj.version>
+        <aspectj.version>1.9.9.1</aspectj.version>
         <java.version>11</java.version>
         <junit.jupiter.version>5.6.2</junit.jupiter.version>
         <junit.maven.surefire.plugin.version>2.19.1</junit.maven.surefire.plugin.version>
