@@ -1,0 +1,53 @@
+version: "3.9"
+services:
+  jenkins:
+    image: jenkins/jenkins:lts-jdk11
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    ports:
+      - "8088:8080"
+      - "50000:50000"
+    environment:
+      JAVA_OPTS: "-Dhudson.footerURL=https://mycompany.com"
+  postgresql:
+    image: postgres:9-alpine
+    networks:
+      - jira-net
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+    environment:
+      - 'POSTGRES_USER=jira'
+      - 'POSTGRES_PASSWORD=cloudblue'
+      - 'POSTGRES_DB=jiradb'
+      - 'POSTGRES_ENCODING=UNICODE'
+      - 'POSTGRES_COLLATE=C'
+      - 'POSTGRES_COLLATE_TYPE=C'
+  jira:
+    depends_on:
+      - postgresql
+    image: teamatldocker/jira
+    volumes:
+      - jira_data:/var/atlassian/jira
+    ports:
+      - "9090:8080"
+    networks:
+      - jira-net
+    environment:
+      - 'JIRA_DATABASE_URL=postgresql://jira@postgresql/jiradb'
+      - 'JIRA_DB_PASSWORD=cloudblue'
+      - 'SETENV_JVM_MINIMUM_MEMORY=2048m'
+      - 'SETENV_JVM_MAXIMUM_MEMORY=4096m'
+      - 'JIRA_PROXY_NAME='
+      - 'JIRA_PROXY_PORT='
+      - 'JIRA_PROXY_SCHEME='
+volumes:
+  jira_data:
+    external: false
+  postgresql_data:
+    external: false
+  jenkins_home:
+    external: false
+
+networks:
+  jira-net:
+    driver: bridge
