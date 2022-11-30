@@ -10,7 +10,7 @@ services:
     environment:
       JAVA_OPTS: "-Dhudson.footerURL=https://mycompany.com"
   postgresql:
-    image: postgres:9-alpine
+    image: postgres:15-alpine
     networks:
       - jira-net
     volumes:
