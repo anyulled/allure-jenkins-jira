@@ -25,7 +25,7 @@ services:
   jira:
     depends_on:
       - postgresql
-    image: teamatldocker/jira
+    image: teamatldocker/jira:8.22.4
     volumes:
       - jira_data:/var/atlassian/jira
     ports:
@@ -37,9 +37,6 @@ services:
       - 'JIRA_DB_PASSWORD=cloudblue'
       - 'SETENV_JVM_MINIMUM_MEMORY=2048m'
       - 'SETENV_JVM_MAXIMUM_MEMORY=4096m'
-      - 'JIRA_PROXY_NAME='
-      - 'JIRA_PROXY_PORT='
-      - 'JIRA_PROXY_SCHEME='
 volumes:
   jira_data:
     external: false
